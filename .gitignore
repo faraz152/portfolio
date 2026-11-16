@@ -10,3 +10,6 @@ next-env.d.ts
 BRIEF.md
 .claude/
 public/images/profile/DevFest*
+
+.vercel
+.env*

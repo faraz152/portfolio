@@ -3,7 +3,7 @@
 // public/images/... and it shows up. Until then a labelled placeholder is shown.
 
 export const site = {
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://farazahmed.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://farazahmed-roan.vercel.app",
   name: "Faraz Ahmed",
   title: "Faraz Ahmed — Senior Software Engineer, Android & Full-Stack",
   description:
