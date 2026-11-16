@@ -39,6 +39,36 @@ html.dark-mode[data-preset="midnight"] { --bg: #14151a; --photo-bg: #14151a; }
 html.dark-mode[data-preset="charcoal"] { --bg: #12151c; --photo-bg: #12151c; }
 html.dark-mode[data-preset="forest"] { --bg: #0d1210; --photo-bg: #0d1210; }
 
+/* ---------- Light mode polish (light theme only; dark mode untouched) ----------
+   White cards on a pure-white page had almost no separation, so the light theme
+   gets a soft off-white canvas, firmer card edges and a tinted progress fill. */
+html:not(.dark-mode) {
+  --bg: #f4f4f1;
+  --photo-bg: #e7e7e3;
+  --line: rgb(0 0 0 / .09);
+  --shadow: 0 0 0 1px rgb(0 0 0 / .06), 0 1px 2px rgb(0 0 0 / .04),
+    0 4px 8px -2px rgb(0 0 0 / .05), 0 16px 32px -16px rgb(0 0 0 / .14);
+  --glass-shadow: var(--shadow);
+}
+html:not(.dark-mode) .tech-progress { background: rgb(0 0 0 / .05); box-shadow: inset 0 1px 2px rgb(0 0 0 / .06); }
+html:not(.dark-mode) .progress-line {
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 35%, #c6f3d6 100%);
+  box-shadow: 0 0 0 1px rgb(0 150 55 / .16), 0 6px 14px -6px rgb(0 120 45 / .28);
+}
+html:not(.dark-mode) .progress-num { background: #fff; color: rgb(0 0 0 / .8); border-color: rgb(0 0 0 / .08); }
+html:not(.dark-mode) .tech-img.trio span { box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+html:not(.dark-mode) .more-card { transition: transform .3s ease, box-shadow .3s ease; }
+html:not(.dark-mode) .more-card:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgb(0 0 0 / .08), 0 18px 36px -18px rgb(0 0 0 / .22); }
+html:not(.dark-mode) .form-contact,
+html:not(.dark-mode) .contact-meta {
+  background: #fff; border-radius: 24px; box-shadow: var(--shadow);
+  padding: clamp(20px, 3vw, 32px);
+}
+html:not(.dark-mode) .contact-meta { border-top: 0; margin-top: 16px; }
+html:not(.dark-mode) .form-contact .field:last-of-type { margin-bottom: 0; }
+html:not(.dark-mode) .tf-btn { background: #0f0f0f; color: #fff; box-shadow: none; }
+html:not(.dark-mode) .tf-btn:hover { background: var(--primary); color: #000; }
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
