@@ -1,0 +1,165 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--brand:#f2542d;--ink:#1d1b1a;--mute:#8a8580;--line:#efebe7;--soft:#fff4ef;--green:#1f9d55}
+html,body{width:360px;height:664px;overflow:hidden;background:#fff;font-family:"Segoe UI",Inter,system-ui,sans-serif;color:var(--ink)}
+.screen{display:none;height:664px;position:relative}
+.status{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:12px;font-weight:600}
+.status i{font-style:normal;letter-spacing:2px}
+.row{display:flex;align-items:center}
+.pill{border-radius:999px}
+.emoji{font-family:"Segoe UI Emoji","Apple Color Emoji",sans-serif}
+/* Home */
+.hdr{padding:6px 18px 12px;background:var(--brand);color:#fff}
+.hdr small{opacity:.8;font-size:11px}
+.hdr b{font-size:15px;display:block;margin-top:1px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.5px}
+.search{margin-top:12px;background:#fff;color:var(--mute);font-size:13px;padding:11px 14px;border-radius:12px;display:flex;gap:8px}
+.cats{display:flex;gap:10px;padding:14px 18px 6px;overflow:hidden}
+.cat{width:58px;text-align:center;font-size:11px;font-weight:600}
+.cat span{display:grid;place-items:center;width:58px;height:58px;border-radius:16px;background:var(--soft);font-size:28px;margin-bottom:5px}
+.promo{margin:10px 18px;border-radius:16px;background:var(--ink);color:#fff;padding:16px;position:relative;overflow:hidden;height:122px}
+.promo b{font-size:20px;line-height:1.1;display:block}
+.promo small{font-size:11px;opacity:.7}
+.promo .tag{display:inline-block;margin-top:10px;background:var(--brand);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px}
+.promo .big{position:absolute;right:-6px;bottom:-14px;font-size:96px}
+h3{font-size:16px;padding:10px 18px 8px;display:flex;justify-content:space-between;align-items:baseline}
+h3 a{font-size:12px;color:var(--brand);font-weight:600}
+.rest{margin:0 18px 12px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.rest .img{height:92px;display:grid;place-items:center;font-size:52px;position:relative}
+.rest .img em{position:absolute;left:10px;top:10px;font-style:normal;background:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:999px;color:var(--brand)}
+.rest .info{padding:9px 12px}
+.rest .info b{font-size:14px}
+.rest .meta{font-size:11px;color:var(--mute);margin-top:3px;display:flex;gap:10px}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:60px;border-top:1px solid var(--line);background:#fff;display:flex;justify-content:space-around;align-items:center;font-size:10px;color:var(--mute)}
+.tabbar div{text-align:center}.tabbar span{display:block;font-size:19px;margin-bottom:2px;filter:grayscale(1);opacity:.6}
+.tabbar .on{color:var(--brand);font-weight:700}.tabbar .on span{filter:none;opacity:1}
+/* Menu */
+.cover{height:150px;background:#ffd8c9;display:grid;place-items:center;font-size:84px;position:relative}
+.cover .back{position:absolute;left:14px;top:12px;width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:16px;font-weight:700}
+.rhead{padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.rhead b{font-size:20px}
+.rhead .meta{font-size:12px;color:var(--mute);margin-top:4px;display:flex;gap:12px}
+.rhead .meta .r{color:var(--ink);font-weight:700}
+.mtabs{display:flex;gap:8px;padding:12px 18px 4px}
+.mtabs span{font-size:12px;font-weight:600;padding:7px 12px;border-radius:999px;background:#f6f3f0}
+.mtabs .on{background:var(--ink);color:#fff}
+.item{display:flex;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.item .t{flex:1}
+.item b{font-size:14px}
+.item p{font-size:11px;color:var(--mute);margin:3px 0 6px;line-height:1.35}
+.item .price{font-size:13px;font-weight:700}
+.item .th{width:76px;height:76px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:40px;position:relative}
+.item .th i{font-family:"Segoe UI",sans-serif;font-size:16px;line-height:1;position:absolute;right:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-style:normal;font-weight:700;color:var(--brand)}
+.item .th i.q{background:var(--brand);color:#fff;border:0;font-size:12px}
+.cartbar{position:absolute;left:14px;right:14px;bottom:16px;background:var(--brand);color:#fff;border-radius:14px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;box-shadow:0 10px 24px -8px rgba(242,84,45,.6)}
+.cartbar small{display:block;font-size:11px;opacity:.8;font-weight:500}
+/* Tracking */
+.map{height:330px;background:#eef1ea;position:relative;overflow:hidden}
+.map svg{position:absolute;inset:0}
+.map .chip{position:absolute;background:#fff;border-radius:999px;font-size:11px;font-weight:700;padding:6px 10px;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.sheet{position:absolute;left:0;right:0;top:300px;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 18px;box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+.grab{width:38px;height:4px;border-radius:9px;background:#ddd;margin:0 auto 12px}
+.eta small{font-size:12px;color:var(--mute)}
+.eta b{font-size:24px;display:block;margin-top:2px}
+.bar{display:flex;gap:6px;margin:12px 0 14px}.bar i{flex:1;height:5px;border-radius:9px;background:var(--line)}.bar i.on{background:var(--brand)}
+.steps{display:grid;gap:12px}
+.step{display:flex;gap:12px;align-items:center;font-size:13px}
+.step .d{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;background:#f6f3f0;color:var(--mute);font-weight:700}
+.step.done .d{background:var(--green);color:#fff}
+.step.now .d{background:var(--brand);color:#fff}
+.step small{display:block;color:var(--mute);font-size:11px}
+.rider{margin-top:14px;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px}
+.rider .av{width:40px;height:40px;border-radius:50%;background:#ffd8c9;display:grid;place-items:center;font-size:20px}
+.rider .t{flex:1;font-size:13px}.rider .t small{display:block;font-size:11px;color:var(--mute)}
+.rider .call{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:16px}
+</style></head>
+<body>
+
+<!-- 1. Home -->
+<section class="screen" id="home">
+  <div class="hdr">
+    <div class="status" style="padding:0;color:#fff"><span>9:41</span><i>▮▮▮ ●</i></div>
+    <div class="row" style="justify-content:space-between;margin-top:4px">
+      <div><small>Deliver to</small><b>Clifton Block 5, Karachi ▾</b></div>
+      <div class="logo">cheflic</div>
+    </div>
+    <div class="search"><span>⌕</span> Search dishes or restaurants</div>
+  </div>
+  <div class="cats emoji">
+    <div class="cat"><span>🍕</span>Pizza</div>
+    <div class="cat"><span>🍔</span>Burgers</div>
+    <div class="cat"><span>🍜</span>Asian</div>
+    <div class="cat"><span>🍗</span>BBQ</div>
+    <div class="cat"><span>🍰</span>Desserts</div>
+  </div>
+  <div class="promo">
+    <small>Today only</small>
+    <b>40% off your<br>first 3 orders</b>
+    <span class="tag">CODE: CHEF40</span>
+    <span class="big emoji">🍔</span>
+  </div>
+  <h3>Popular near you <a>See all</a></h3>
+  <div class="rest">
+    <div class="img emoji" style="background:#ffe8b8">🍕<em>Free delivery</em></div>
+    <div class="info"><b>Slice Theory</b><div class="meta"><span>★ 4.7 (2.1k)</span><span>25–35 min</span><span>Rs. 99 delivery</span></div></div>
+  </div>
+  <div class="rest">
+    <div class="img emoji" style="background:#d8ecd9">🥗</div>
+  </div>
+  <div class="tabbar emoji">
+    <div class="on"><span>🏠</span>Home</div><div><span>🔍</span>Search</div><div><span>🧾</span>Orders</div><div><span>👤</span>Profile</div>
+  </div>
+</section>
+
+<!-- 2. Menu -->
+<section class="screen" id="menu">
+  <div class="cover emoji"><div class="back">←</div>🍕</div>
+  <div class="rhead">
+    <b>Slice Theory</b>
+    <div class="meta"><span class="r">★ 4.7</span><span>Pizza · Italian</span><span>25–35 min</span></div>
+  </div>
+  <div class="mtabs"><span class="on">Popular</span><span>Pizzas</span><span>Sides</span><span>Drinks</span></div>
+  <div class="item"><div class="t"><b>Fajita Supreme</b><p>Chicken fajita, peppers, onions, mozzarella on a hand-tossed base.</p><span class="price">Rs. 1,450</span></div><div class="th emoji">🍕<i class="q">2</i></div></div>
+  <div class="item"><div class="t"><b>Garlic Knots</b><p>Six knots, garlic butter, parmesan, ranch dip.</p><span class="price">Rs. 520</span></div><div class="th emoji">🥖<i>+</i></div></div>
+  <div class="item"><div class="t"><b>Crispy Wings</b><p>8 pcs, choice of hot, BBQ or honey-mustard.</p><span class="price">Rs. 890</span></div><div class="th emoji">🍗<i class="q">1</i></div></div>
+  <div class="cartbar"><div><small>3 items</small>View cart</div><span>Rs. 3,790</span></div>
+</section>
+
+<!-- 3. Tracking -->
+<section class="screen" id="track">
+  <div class="map">
+    <svg viewBox="0 0 360 330" width="360" height="330">
+      <g stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round">
+        <path d="M-10 80 L370 60"/><path d="M-10 210 L370 240"/><path d="M90 -10 L120 340"/><path d="M260 -10 L240 340"/><path d="M-10 150 L180 140 L370 160"/>
+      </g>
+      <g fill="#dfe7d6"><rect x="140" y="85" width="80" height="40" rx="6"/><rect x="20" y="230" width="55" height="70" rx="6"/><rect x="275" y="180" width="70" height="40" rx="6"/></g>
+      <path d="M105 230 L115 145 L180 140 L250 130 L255 70" stroke="#f2542d" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 0"/>
+      <circle cx="105" cy="230" r="9" fill="#1d1b1a"/><circle cx="105" cy="230" r="4" fill="#fff"/>
+      <circle cx="180" cy="140" r="16" fill="#f2542d" opacity=".2"/><circle cx="180" cy="140" r="9" fill="#f2542d"/>
+      <circle cx="255" cy="70" r="9" fill="#1f9d55"/><circle cx="255" cy="70" r="4" fill="#fff"/>
+    </svg>
+    <div class="status" style="position:absolute;left:0;right:0;top:0"><span>9:41</span><i>▮▮▮ ●</i></div>
+    <span class="chip" style="left:52px;top:248px">Slice Theory</span>
+    <span class="chip emoji" style="left:150px;top:104px">🛵 Ali · 1.2 km</span>
+    <span class="chip" style="left:215px;top:34px">Home</span>
+  </div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="eta"><small>Arriving in</small><b>12–15 min</b></div>
+    <div class="bar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+    <div class="steps">
+      <div class="step done"><span class="d">✓</span><div>Order confirmed<small>8:52 PM</small></div></div>
+      <div class="step done"><span class="d">✓</span><div>Food is ready<small>9:14 PM</small></div></div>
+      <div class="step now"><span class="d">3</span><div><b>Rider is on the way</b><small>Live GPS updates</small></div></div>
+    </div>
+    <div class="rider"><span class="av emoji">🧑</span><div class="t"><b>Ali Raza</b><small>Honda CD-70 · KHI 4521</small></div><span class="call emoji">📞</span></div>
+  </div>
+</section>
+
+<script>
+const id = location.hash.slice(1) || "home";
+document.getElementById(id).style.display = "block";
+</script>
+</body></html>

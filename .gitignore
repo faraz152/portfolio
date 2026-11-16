@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+
+# private working notes / local tooling
+BRIEF.md
+.claude/
+public/images/profile/DevFest*

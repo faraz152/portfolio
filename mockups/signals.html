@@ -1,0 +1,187 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--panel:#121722;--line:#1e2533;--ink:#e8ecf3;--mute:#7c8699;--gold:#f0b90b;--up:#16c784;--down:#ea3943}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Inter,system-ui,sans-serif}
+.screen{display:none;height:900px}
+.app{display:grid;grid-template-columns:232px 1fr;height:100%}
+.side{border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;margin:0 8px 24px}
+.brand i{width:32px;height:32px;border-radius:9px;background:var(--gold);color:#0b0e14;display:grid;place-items:center;font-style:normal;font-size:16px}
+.brand small{display:block;font-weight:500;font-size:10px;color:var(--gold);letter-spacing:.12em}
+.nav{padding:10px 12px;border-radius:9px;font-size:14px;color:var(--mute);display:flex;justify-content:space-between}
+.nav.on{background:#1a2130;color:var(--ink);font-weight:600}
+.nav em{font-style:normal;background:var(--gold);color:#0b0e14;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px}
+.plan{margin-top:auto;border:1px solid #3a3115;background:#17140a;border-radius:12px;padding:14px;font-size:12px;color:var(--mute)}
+.plan b{display:block;color:var(--gold);font-size:14px;margin-bottom:4px}
+.main{padding:24px 30px;overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.top h1{font-size:24px;font-weight:700}
+.top p{font-size:13px;color:var(--mute);margin-top:3px}
+.live{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute)}
+.live b{color:var(--up)}
+.btn{background:var(--gold);color:#0b0e14;font-weight:700;font-size:13px;padding:10px 16px;border-radius:9px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi small{font-size:12px;color:var(--mute)}
+.kpi b{display:block;font-size:26px;margin-top:6px;font-weight:700}
+.kpi span{font-size:12px;color:var(--up)}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.ph b{font-size:15px}
+.tabs{display:flex;gap:6px}.tabs span{font-size:12px;padding:6px 11px;border-radius:7px;color:var(--mute)}.tabs .on{background:#1f2738;color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-weight:500;color:var(--mute);text-align:left;padding:11px 18px;font-size:12px}
+td{padding:12px 18px;border-top:1px solid var(--line);white-space:nowrap}
+.pair{display:flex;align-items:center;gap:10px;font-weight:600}
+.coin{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#0b0e14}
+.side-l{color:var(--up);background:rgba(22,199,132,.12);font-weight:700;font-size:11px;padding:4px 8px;border-radius:6px}
+.side-s{color:var(--down);background:rgba(234,57,67,.12);font-weight:700;font-size:11px;padding:4px 8px;border-radius:6px}
+.tp{display:flex;gap:4px}.tp i{width:22px;height:6px;border-radius:9px;background:#273047}.tp i.hit{background:var(--up)}
+.st{font-size:12px;font-weight:600}
+.up{color:var(--up)}.down{color:var(--down)}.gold{color:var(--gold)}.mute{color:var(--mute)}
+.feed{padding:6px 18px}
+.ev{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
+.ev:last-child{border:0}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none}
+.ev small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+/* detail */
+.chartwrap{padding:12px 18px 18px;position:relative}
+.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:0 18px 18px}
+.lv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--mute)}
+.lv b{display:block;font-size:15px;color:var(--ink);margin-top:3px}
+.note{padding:16px 18px;font-size:13px;line-height:1.55;color:#c3cad8}
+.note h4{font-size:13px;color:var(--ink);margin-bottom:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chips span{font-size:11px;border:1px solid var(--line);padding:4px 9px;border-radius:999px;color:var(--mute)}
+</style></head>
+<body>
+
+<section class="screen" id="dash">
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>◆</i><div>Premium Crypto<small>SIGNALS</small></div></div>
+    <div class="nav on">Dashboard</div>
+    <div class="nav">Live signals <em>6</em></div>
+    <div class="nav">History</div>
+    <div class="nav">Performance</div>
+    <div class="nav">Alerts</div>
+    <div class="nav">Settings</div>
+    <div class="plan"><b>VIP plan</b>Telegram + email alerts, futures and spot signals. Renews 12 Dec.</div>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div><h1>Signals dashboard</h1><p>Spot &amp; futures setups with entry, targets and stop-loss</p></div>
+      <div class="live"><b>●</b> Live prices · Binance <span class="btn">+ New alert</span></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><small>Win rate (30d)</small><b>71.4%</b><span>▲ 3.2% vs last month</span></div>
+      <div class="kpi"><small>Signals this month</small><b>48</b><span class="mute">34 closed · 14 open</span></div>
+      <div class="kpi"><small>Avg. return / signal</small><b>+4.8%</b><span>▲ on closed trades</span></div>
+      <div class="kpi"><small>Targets hit</small><b>92</b><span class="mute">of 136 targets</span></div>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <div class="ph"><b>Active signals</b><div class="tabs"><span class="on">All</span><span>Spot</span><span>Futures</span></div></div>
+        <table>
+          <tr><th>Pair</th><th>Side</th><th>Entry</th><th>Price</th><th>Targets</th><th>Stop-loss</th><th>P/L</th><th>Status</th></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#f7931a">₿</span>BTC/USDT</div></td><td><span class="side-l">LONG</span></td><td>96,400</td><td>99,180</td><td><div class="tp"><i class="hit"></i><i class="hit"></i><i></i></div></td><td>93,900</td><td class="up">+2.88%</td><td class="st up">TP2 hit</td></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#8c8cff">Ξ</span>ETH/USDT</div></td><td><span class="side-l">LONG</span></td><td>3,412</td><td>3,486</td><td><div class="tp"><i class="hit"></i><i></i><i></i></div></td><td>3,290</td><td class="up">+2.17%</td><td class="st up">TP1 hit</td></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#14f195">S</span>SOL/USDT</div></td><td><span class="side-s">SHORT</span></td><td>212.6</td><td>208.9</td><td><div class="tp"><i class="hit"></i><i></i><i></i></div></td><td>219.0</td><td class="up">+1.74%</td><td class="st up">TP1 hit</td></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#f0b90b">B</span>BNB/USDT</div></td><td><span class="side-l">LONG</span></td><td>688.0</td><td>684.2</td><td><div class="tp"><i></i><i></i><i></i></div></td><td>661.0</td><td class="down">−0.55%</td><td class="st gold">Open</td></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#2a5ada;color:#fff">L</span>LINK/USDT</div></td><td><span class="side-l">LONG</span></td><td>24.10</td><td>24.86</td><td><div class="tp"><i class="hit"></i><i></i><i></i></div></td><td>23.20</td><td class="up">+3.15%</td><td class="st up">TP1 hit</td></tr>
+          <tr><td><div class="pair"><span class="coin" style="background:#e84142;color:#fff">A</span>AVAX/USDT</div></td><td><span class="side-s">SHORT</span></td><td>41.80</td><td>42.05</td><td><div class="tp"><i></i><i></i><i></i></div></td><td>43.60</td><td class="down">−0.60%</td><td class="st gold">Open</td></tr>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="ph"><b>Live feed</b><span class="mute" style="font-size:12px">Today</span></div>
+        <div class="feed">
+          <div class="ev"><span class="dot" style="background:var(--up)"></span><div><b>BTC/USDT</b> hit Target 2 at 99,120<small>2 min ago · +2.82% from entry</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--gold)"></span><div>New signal: <b>AVAX/USDT SHORT</b><small>18 min ago · Entry 41.80, SL 43.60</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--up)"></span><div><b>SOL/USDT</b> hit Target 1 at 208.9<small>46 min ago · stop moved to entry</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--down)"></span><div><b>DOGE/USDT</b> closed at stop-loss<small>2 h ago · −1.9%</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--up)"></span><div><b>LINK/USDT</b> hit Target 1 at 24.80<small>3 h ago · +2.9% from entry</small></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</section>
+
+<section class="screen" id="detail">
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>◆</i><div>Premium Crypto<small>SIGNALS</small></div></div>
+    <div class="nav">Dashboard</div>
+    <div class="nav on">Live signals <em>6</em></div>
+    <div class="nav">History</div>
+    <div class="nav">Performance</div>
+    <div class="nav">Alerts</div>
+    <div class="nav">Settings</div>
+    <div class="plan"><b>VIP plan</b>Telegram + email alerts, futures and spot signals. Renews 12 Dec.</div>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div><h1 style="display:flex;gap:12px;align-items:center"><span class="coin" style="background:#f7931a;width:34px;height:34px;font-size:16px">₿</span>BTC/USDT <span class="side-l" style="font-size:13px">LONG</span></h1><p>Signal #482 · 4h timeframe · posted 14 Nov, 10:20</p></div>
+      <div class="live"><b>●</b> 99,600.00 <span class="up">+3.32%</span> <span class="btn">Copy to Binance</span></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 340px">
+      <div class="panel">
+        <div class="ph"><b>Chart</b><div class="tabs"><span>1h</span><span class="on">4h</span><span>1D</span></div></div>
+        <div class="chartwrap"><svg id="chart" width="740" height="470"></svg></div>
+        <div class="levels">
+          <div class="lv">Entry<b>96,400</b></div>
+          <div class="lv">Target 1<b class="up">98,000 ✓</b></div>
+          <div class="lv">Target 2<b class="up">99,100 ✓</b></div>
+          <div class="lv">Target 3<b>101,500</b></div>
+          <div class="lv">Stop-loss<b class="down">93,900</b></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph"><b>Analysis</b></div>
+        <div class="note">
+          <h4>Breakout retest of the 96k range high</h4>
+          Price reclaimed the 96k range high on rising volume and retested it as support on the 4h. Funding is neutral and open interest is building with price.
+          <div class="chips"><span>Range breakout</span><span>Volume ↑</span><span>RSI 61</span><span>Risk 1:2.1</span></div>
+        </div>
+        <div class="ph" style="border-top:1px solid var(--line)"><b>Updates</b></div>
+        <div class="feed">
+          <div class="ev"><span class="dot" style="background:var(--up)"></span><div>Target 2 hit at 99,120<small>2 min ago</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--gold)"></span><div>Stop moved to break-even (96,400)<small>Yesterday, 18:05</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--up)"></span><div>Target 1 hit at 98,010<small>Yesterday, 17:40</small></div></div>
+          <div class="ev"><span class="dot" style="background:var(--mute)"></span><div>Signal posted<small>14 Nov, 10:20</small></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</section>
+
+<script>
+const id = location.hash.slice(1) || "dash";
+document.getElementById(id).style.display = "block";
+if (id === "detail") {
+  // Deterministic candles that range, break out above 96.4k and trend up to ~99.2k
+  const svg = document.getElementById("chart"), W = 740, H = 470, N = 64;
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const c = []; let p = 94800;
+  for (let i = 0; i < N; i++) {
+    const drift = i < 28 ? (95600 - p) * 0.12 : i < 34 ? 260 : i < 40 ? -90 : 150;
+    const o = p, cl = o + drift + (rnd() - 0.5) * 520;
+    const hi = Math.max(o, cl) + rnd() * 260, lo = Math.min(o, cl) - rnd() * 260;
+    c.push({ o, cl, hi, lo }); p = cl;
+  }
+  const min = 93300, max = 102200, y = v => H - 30 - ((v - min) / (max - min)) * (H - 50), cw = (W - 70) / N;
+  let s = "";
+  [94000, 96000, 98000, 100000, 102000].forEach(v => { s += `<line x1="0" x2="${W - 64}" y1="${y(v)}" y2="${y(v)}" stroke="#1e2533"/><text x="${W - 58}" y="${y(v) + 4}" fill="#7c8699" font-size="11">${v.toLocaleString()}</text>`; });
+  c.forEach((k, i) => { const x = i * cw + cw / 2, col = k.cl >= k.o ? "#16c784" : "#ea3943";
+    s += `<line x1="${x}" x2="${x}" y1="${y(k.hi)}" y2="${y(k.lo)}" stroke="${col}"/><rect x="${x - cw * 0.32}" y="${y(Math.max(k.o, k.cl))}" width="${cw * 0.64}" height="${Math.max(1.5, Math.abs(y(k.o) - y(k.cl)))}" fill="${col}"/>`; });
+  const lvl = (v, col, label, dash) => { s += `<line x1="0" x2="${W - 64}" y1="${y(v)}" y2="${y(v)}" stroke="${col}" stroke-width="1.4" ${dash ? 'stroke-dasharray="6 5"' : ""}/><rect x="6" y="${y(v) - 19}" rx="4" width="${label.length * 6.6 + 14}" height="17" fill="${col}"/><text x="13" y="${y(v) - 6}" font-size="11" font-weight="700" fill="#0b0e14">${label}</text>`; };
+  lvl(101500, "#16c784", "TP3 101,500", true); lvl(99100, "#16c784", "TP2 99,100 ✓", true); lvl(98000, "#16c784", "TP1 98,000 ✓", true);
+  lvl(96400, "#f0b90b", "ENTRY 96,400"); lvl(93900, "#ea3943", "SL 93,900", true);
+  const last = c[N - 1]; s += `<rect x="${W - 64}" y="${y(last.cl) - 10}" width="60" height="20" rx="4" fill="#16c784"/><text x="${W - 59}" y="${y(last.cl) + 4}" font-size="11" font-weight="700" fill="#0b0e14">${Math.round(last.cl).toLocaleString()}</text>`;
+  svg.innerHTML = s;
+}
+</script>
+</body></html>
